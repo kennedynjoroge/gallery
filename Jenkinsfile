@@ -1,7 +1,7 @@
 pipeline { 
   agent any
   tools { 
-    gradle "NodeJs"
+    nodejs "NodeJs"
   }
   stages { 
     stage('clone repository') {
@@ -11,17 +11,27 @@ pipeline {
     }
     stage('Build the project') {
       steps { 
-        sh 'npm install build'
+        sh 'npm install'
+      }
+    }
+
+    stage('Tests') {
+      steps { 
+        sh 'npm test'
       }
     }
     stage('Heroku deploy') {
-      steps { 
-        sh 'Credentials'
+      steps {
+                withCredentials ([usernameColonPassword(credentialsId: 'heroku', variable: 'HEROKU_CREDENTIALS')]){
+                     sh "git push  https://${HEROKU_CREDENTIALS}@git.heroku.com/gallerykenya.git master"
+        }
       }
-    stage('Tests') {
-      steps { 
-        sh 'gradle test'
-      }
+  
+    }
+    post{
+        success {
+            slackSend colour: "green", message: "Deployment Successful!"
+        }
     }
   }
 }
