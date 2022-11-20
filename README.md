@@ -1,4 +1,4 @@
-# gallery
+# Gallery DevOps Application
 This web application was forked to setup a CI-CD Pipeline.
 
 Some few changes made are:
