@@ -1,4 +1,4 @@
-# Gallery Portal DevOps Experimental PlayGround
+# Gallery Portal DevOps PlayGround
 This web application was forked to setup a CI-CD Pipeline.
 
 Some few changes made are:
